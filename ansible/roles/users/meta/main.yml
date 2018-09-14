@@ -1,0 +1,6 @@
+# vim:ft=ansible:
+---
+galaxy_info:
+  author: fdm1
+  description: Adds users
+dependencies: []

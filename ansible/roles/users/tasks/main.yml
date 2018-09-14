@@ -1,0 +1,30 @@
+# vim:ft=ansible:
+---
+- name: users | create sudo-local group
+  become: true
+  group:
+    name: sudo-local
+    state: present
+
+- name: users | add sudoers rule
+  become: true
+  copy:
+    src: 01-users-sudo
+    dest: /etc/sudoers.d/01-users-sudo
+    validate: "visudo -cf %s"
+
+- name: users | create users
+  become: true
+  user:
+    name: "{{ item.key }}"
+    password: "{{ item.value.password }}"
+    groups: sudo-local,adm
+    shell: "{{ item.value.shell | default('/bin/bash') }}"
+  with_dict: "{{ users }}"
+
+- name: users | add authorized keys
+  become: true
+  authorized_key:
+    user: "{{ item.key }}"
+    key: "{{ item.value.key }}"
+  with_dict: "{{ users }}"

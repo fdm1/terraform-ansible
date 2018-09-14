@@ -1,0 +1,12 @@
+*.egg-info
+*.pyc
+.env
+/.terraform
+dist
+
+states/*.plan
+
+# Stored in S3
+*.tfstate
+*.tfstate.backup
+*.retry

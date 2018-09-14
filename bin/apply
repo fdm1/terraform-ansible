@@ -1,0 +1,15 @@
+#! /bin/bash
+
+set -eu -o pipefail
+PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../
+source ${PROJECT_ROOT}/bin/_shared.sh
+./bin/init
+
+usage() {
+  cat <<EOF
+bin/apply
+EOF
+}
+
+terraform apply \
+  $@

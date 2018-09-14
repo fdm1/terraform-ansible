@@ -1,0 +1,35 @@
+#! /bin/bash
+
+set -e -o pipefail
+PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../
+source ${PROJECT_ROOT}/bin/_shared.sh
+
+usage() {
+  cat <<EOF
+bin/ansible
+EOF
+}
+
+SET_HOSTS=1
+INVENTORY="-i ansible/inventory.yml"
+COMMAND="ansible all"
+
+if [ "$1" == '--no-set-hosts' ]; then
+  SET_HOSTS=0
+  shift
+fi
+
+if [ "$1" == 'playbook' ]; then
+  COMMAND="ansible-playbook"
+  shift
+fi
+
+set -u
+
+if [ $SET_HOSTS -eq 1 ]; then
+  echo "setting hosts from terraform output"
+  ./bin/init
+  set_remote_hosts
+fi
+
+$COMMAND $INVENTORY --ask-vault-pass "$@"
