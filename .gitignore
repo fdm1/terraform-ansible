@@ -8,5 +8,5 @@ states/*.plan
 
 # Stored in S3
 *.tfstate
-*.tfstate.backup
+*.backup
 *.retry
