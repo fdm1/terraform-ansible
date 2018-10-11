@@ -4,11 +4,16 @@ set -eu -o pipefail
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../
 source ${PROJECT_ROOT}/bin/_shared.sh
 
-BUCKET=fdm1-default-bucket
+if ! aws s3 ls s3://$(remote_state_bucket) &> /dev/null; then
+  aws s3 mb s3://$(remote_state_bucket)
+fi
 
-if ! aws s3 ls s3://$BUCKET &> /dev/null; then
-	aws s3 mb s3://$BUCKET
+if [ ! -e $(secrets_file) ]; then
+  get_secrets
+else
+  echo "$(secrets_file) already exists locally. rm $(secrets_file) if you want to refresh it"
 fi
 
 tfenv install
-terraform init -backend-config="bucket=$BUCKET"
+terraform init \
+  -backend-config="bucket=$(remote_state_bucket)"

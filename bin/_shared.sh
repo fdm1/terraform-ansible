@@ -5,3 +5,15 @@ set_remote_hosts() {
     export $s
   done
 }
+
+remote_state_bucket() {
+  echo fdm1-default-bucket
+}
+
+secrets_file() {
+  echo secrets.auto.tfvars
+}
+
+get_secrets() {
+  aws s3 cp s3://$(remote_state_bucket)/terraform/$(secrets_file) .
+}
