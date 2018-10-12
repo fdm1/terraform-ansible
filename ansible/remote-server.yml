@@ -1,0 +1,9 @@
+# vim:ft=ansible:
+---
+- name: Remote server definition playbook
+  hosts:
+    - lightsail
+    - digitalocean
+  roles:
+    - role: users
+    # - role: packages

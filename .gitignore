@@ -4,6 +4,7 @@
 .env
 /.terraform
 dist
+*.log
 
 states/*.plan
 

@@ -1,5 +1,7 @@
 module "aws" {
   source = "./aws"
+
+  ssh_keys = "${var.ssh_keys}"
 }
 
 module "do" {

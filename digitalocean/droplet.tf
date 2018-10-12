@@ -4,5 +4,9 @@ resource "digitalocean_droplet" "web" {
   name     = "web-1"
   region   = "nyc1"
   size     = "s-1vcpu-1gb"
-  ssh_keys = ["${digitalocean_ssh_key.macbook.fingerprint}"]
+  ssh_keys = ["${digitalocean_ssh_key.fdm1_lightsail.fingerprint}"]
+
+  provisioner "local-exec" {
+    command = "resources/remote_server_provisioner.sh digitalocean ${self.ipv4_address}"
+  }
 }

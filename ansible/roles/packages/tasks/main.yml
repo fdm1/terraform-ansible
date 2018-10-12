@@ -1,0 +1,11 @@
+# vim:ft=ansible:
+---
+- name: packages | Install packages
+  become: true
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - tldr
+    - bat
+    - fd

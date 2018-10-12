@@ -1,6 +1,0 @@
-# vim:ft=ansible:
----
-- name: Lightsail server definition playbook
-  hosts: lightsail
-  roles:
-    - role: users

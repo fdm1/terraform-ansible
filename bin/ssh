@@ -2,30 +2,39 @@
 set -e -o pipefail
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../
 source ${PROJECT_ROOT}/bin/_shared.sh
-./bin/init
 
 usage() {
   cat <<EOF
-bin/ssh <username (default=frankmassi)>
+bin/ssh <cloud_provider [aws, do] (default=do)> <username (default=frankmassi)>
 EOF
 }
 
+CLOUD=do
 USERNAME=frankmassi
 
 if [[ $# == 1 ]]; then
-  USERNAME=$1
+  CLOUD=$1
 fi
 
-if [[ $# > 1 ]]; then
+if [[ $# == 2 ]]; then
+  CLOUD=$1
+  USERNAME=$2
+fi
+
+if [[ $# > 2 ]]; then
   usage
   exit 1
 fi
 
 set -u
 
+refresh_terraform
 
-PUBLIC_IP=$(terraform output -json | jq --raw-output .fdm1_lightsail_public_ip.value)
 KEY=$(terraform output -json | jq --raw-output .fdm1_lightsail_rsa_key.value)
 set_remote_hosts
+set_instance_type $CLOUD
 
-ssh -A -i $KEY -o StrictHostKeyChecking=no $USERNAME@$LIGHTSAIL_HOST
+HOST_VAR=${INSTANCE_TYPE}_HOST
+HOST_IP=$(eval echo \$${HOST_VAR})
+
+ssh -A -i $KEY -o StrictHostKeyChecking=no $USERNAME@$HOST_IP

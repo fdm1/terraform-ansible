@@ -7,6 +7,15 @@ source ${PROJECT_ROOT}/bin/_shared.sh
 usage() {
   cat <<EOF
 bin/ansible
+
+examples:
+
+bin/ansible playbook ansible/remote-server.yml
+bin/ansible playbook ansible/remote-server.yml --limit lightsail
+bin/ansible playbook ansible/remote-server.yml --limit digitalocean
+bin/ansible -a "echo foo"
+bin/ansible -a "echo foo" --limit lightsail
+bin/ansible -a "echo foo" --limit digitalocean
 EOF
 }
 
@@ -27,8 +36,8 @@ fi
 set -u
 
 if [ $SET_HOSTS -eq 1 ]; then
+  refresh_terraform
   echo "setting hosts from terraform output"
-  ./bin/init
   set_remote_hosts
 fi
 
