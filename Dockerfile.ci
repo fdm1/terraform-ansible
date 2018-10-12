@@ -1,0 +1,8 @@
+FROM ubuntu:18.10
+
+RUN apt-get update && apt-get install -y git curl unzip
+RUN git clone https://github.com/kamatama41/tfenv.git ~/.tfenv
+ENV PATH=$PATH:/root/.tfenv/bin
+COPY . /terraform-ansible
+WORKDIR /terraform-ansible
+CMD ["./ci/terraform_validate.sh"]
