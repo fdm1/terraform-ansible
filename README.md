@@ -1,5 +1,7 @@
-aws-terraform-ansible
+terraform-ansible
 =====================
+
+Personal infrastructure management/playground. Works cross-cloud provider for both AWS and DigitalOcean.
 
 Terraform
 =========
@@ -8,28 +10,32 @@ Apply the things:
 
 ```
 $ ./bin/apply
-$ ./bin/apply -target=...
+$ ./bin/apply -target=module.aws
+$ ./bin/apply -target=module.do
 ```
 
-If the lightsail instance is getting rebuilt, it will re-ansible itself during the apply.
+If an instance is getting rebuilt, it will re-ansible itself during the apply using a local-exec provisioner.
 
 Ansible
 =======
 
-All of these commands will need to know the ansible vault password. They also need to go through the `bin` script, as the host IP for the lightsail isntance is determined using the terraform output.
+All of these commands will need to know the ansible vault password. They also need to go through the `bin` script, as the host IP for the isntances are determined using the terraform output.
 
 Run the ansible playbook:
 
 ```
-$ ./bin/ansible playbook ansible/lightsail_server.yml
+$ ./bin/ansible playbook ansible/remote-server.yml
+$ ./bin/ansible playbook ansible/remote-server.yml --limit lightsail
+$ ./bin/ansible playbook ansible/remote-server.yml --limit digitalocean
 ```
 
 Run other ansible commands:
 
 ```
-$ ./bin/ansible -a 'echo hi!'
 $ ./bin/ansible -m ping
-$ ...
+$ bin/ansible -a "echo foo"
+$ bin/ansible -a "echo foo" --limit lightsail
+$ bin/ansible -a "echo foo" --limit digitalocean
 ```
 
 SSH
@@ -38,5 +44,5 @@ SSH
 SSH onto the lightsail instance:
 
 ```
-$ ./bin/ssh <username (default=frankmassi)
+$ ./bin/ssh <cloud_provider [do|digitalocean, aws|lightsail] (default=do)> <username (default=frankmassi)>
 ```

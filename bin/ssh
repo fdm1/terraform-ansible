@@ -5,7 +5,7 @@ source ${PROJECT_ROOT}/bin/_shared.sh
 
 usage() {
   cat <<EOF
-bin/ssh <cloud_provider [aws, do] (default=do)> <username (default=frankmassi)>
+bin/ssh <cloud_provider [do|digitalocean, aws|lightsail] (default=do)> <username (default=frankmassi)>
 EOF
 }
 
