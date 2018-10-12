@@ -38,6 +38,20 @@ $ bin/ansible -a "echo foo" --limit lightsail
 $ bin/ansible -a "echo foo" --limit digitalocean
 ```
 
+Encrypting a string via the vault:
+
+```
+$ ansible-vault encrypt_string --ask-vault-pass
+
+# Enter the string, and hit ctrl+d twice.
+```
+
+Encrypting or editing an encrypted file:
+
+```
+$ ansible-vault edit path/to/ansible/file/main.yml
+```
+
 SSH
 ===
 
