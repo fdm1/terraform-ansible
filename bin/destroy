@@ -7,9 +7,9 @@ source ${PROJECT_ROOT}/bin/_shared.sh
 
 usage() {
   cat <<EOF
-bin/apply
+bin/destroy
 EOF
 }
 
-terraform apply \
+terraform destroy \
   $@
