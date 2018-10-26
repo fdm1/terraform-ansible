@@ -14,10 +14,6 @@ secrets_file() {
   echo secrets.auto.tfvars
 }
 
-get_secrets() {
-  aws s3 cp s3://$(remote_state_bucket)/terraform/$(secrets_file) .
-}
-
 set_instance_type() {
   case $1 in
     "do"|digitalocean)

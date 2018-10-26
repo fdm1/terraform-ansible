@@ -1,4 +1,4 @@
-resource "digitalocean_ssh_key" "ssh_keys" {
+resource "aws_lightsail_key_pair" "ssh_keys" {
   count = "${length(var.ssh_keys)}"
 
   name       = "${element(keys(var.ssh_keys), count.index)}"

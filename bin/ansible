@@ -41,4 +41,4 @@ if [ $SET_HOSTS -eq 1 ]; then
   set_remote_hosts
 fi
 
-$COMMAND $INVENTORY --ask-vault-pass "$@"
+$COMMAND $INVENTORY  "$@"

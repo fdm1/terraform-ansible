@@ -13,18 +13,19 @@
     dest: /etc/sudoers.d/01-users-sudo
     validate: "visudo -cf %s"
 
-- name: users | create users
-  become: true
+- name: Create User
   user:
-    name: "{{ item.key }}"
-    password: "{{ item.value.password }}"
+    name: "{{ item.name }}"
+    state: present
     groups: sudo-local,adm
-    shell: "{{ item.value.shell | default('/bin/bash') }}"
-  with_dict: "{{ users }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+  with_items:
+    - "{{ users }}"
 
-- name: users | add authorized keys
-  become: true
+- name: Set authorized ssh key
   authorized_key:
-    user: "{{ item.key }}"
-    key: "{{ item.value.key }}"
-  with_dict: "{{ users }}"
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+  with_subelements:
+     - "{{ users }}"
+     - authorized_keys

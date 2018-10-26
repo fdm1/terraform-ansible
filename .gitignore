@@ -1,5 +1,5 @@
 *.egg-info
-*secrets*
+secrets.auto.tfvars
 *.pyc
 .env
 /.terraform

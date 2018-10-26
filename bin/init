@@ -4,15 +4,7 @@ set -eu -o pipefail
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../
 source ${PROJECT_ROOT}/bin/_shared.sh
 
-if ! aws s3 ls s3://$(remote_state_bucket) &> /dev/null; then
-  aws s3 mb s3://$(remote_state_bucket)
-fi
-
-if [ ! -e $(secrets_file) ]; then
-  get_secrets
-else
-  echo "$(secrets_file) already exists locally. rm $(secrets_file) if you want to refresh it"
-fi
+ansible-vault decrypt --output=$(secrets_file) $(secrets_file).vaulted
 
 tfenv install
 terraform init \

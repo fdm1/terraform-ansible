@@ -38,18 +38,24 @@ $ bin/ansible -a "echo foo" --limit lightsail
 $ bin/ansible -a "echo foo" --limit digitalocean
 ```
 
-Encrypting a string via the vault:
+Encrypting or editing an encrypted file:
+
+```
+$ ansible-vault create path/to/ansible/file/main.yml   # create a file from scratch
+$ ansible-vault encrypt path/to/ansible/file/main.yml  # encrypt an unecrypted file
+$ ansible-vault edit path/to/ansible/file/main.yml     # edit an encrypted file
+$ ansible-vault view path/to/ansible/file/main.yml     # view an encrypted file
+$ ansible-vault decrypt path/to/ansible/file/main.yml  # view an encrypted file
+```
+
+Secrets are stored using ansible vault, and are automatically decrypted in `./bin/init` to a file that is ignored by git
+
+Encrypting a string via the vault (not using as editing them is almost impossible):
 
 ```
 $ ansible-vault encrypt_string --ask-vault-pass
 
 # Enter the string, and hit ctrl+d twice.
-```
-
-Encrypting or editing an encrypted file:
-
-```
-$ ansible-vault edit path/to/ansible/file/main.yml
 ```
 
 SSH
