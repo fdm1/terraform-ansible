@@ -30,11 +30,10 @@ set -u
 
 refresh_terraform
 
-KEY=$(terraform output -json | jq --raw-output .fdm1_lightsail_rsa_key.value)
 set_remote_hosts
 set_instance_type $CLOUD
 
 HOST_VAR=${INSTANCE_TYPE}_HOST
 HOST_IP=$(eval echo \$${HOST_VAR})
 
-ssh -A -i $KEY -o StrictHostKeyChecking=no $USERNAME@$HOST_IP
+ssh -A -o StrictHostKeyChecking=no $USERNAME@$HOST_IP

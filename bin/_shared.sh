@@ -1,7 +1,7 @@
 #! /bin/bash
 
 set_remote_hosts() {
-  for s in $(terraform output -json | jq -r .host_ips.value | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
+  for s in $(terraform output -json | jq -r .host_ips.value | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" | sed 's/\"//g' | sed 's/\[//g' | sed 's/\]//g'); do
     export $s
   done
 }
