@@ -1,7 +1,7 @@
-resource "aws_lightsail_instance" "fdm1_lightsail" {
+resource "aws_lightsail_instance" "lightsail" {
   count = "${var.lightsail_count}"
 
-  name              = "fdm1_lightsail"
+  name              = "lightsail"
   availability_zone = "us-east-1a"
   blueprint_id      = "ubuntu_16_04"
   bundle_id         = "nano_1_0"
