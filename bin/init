@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# I turned this off by default in most shells. need to use gpg agent for yubikeys
+SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
 set -eu -o pipefail
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../
 source ${PROJECT_ROOT}/bin/_shared.sh

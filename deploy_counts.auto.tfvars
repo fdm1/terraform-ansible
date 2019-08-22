@@ -1,5 +1,5 @@
 # aws
-lightsail_count=0
+lightsail_count=1
 
 # digitalocean
-droplet_count=0
+droplet_count=1
