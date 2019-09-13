@@ -1,5 +1,5 @@
 output "host_ips" {
   value = {
-    DROPLET_HOST = digitalocean_droplet.web.*.ipv4_address
+    digitalocean = digitalocean_droplet.droplet.*.ipv4_address
   }
 }

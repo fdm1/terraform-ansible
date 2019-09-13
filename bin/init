@@ -9,6 +9,8 @@ source ${PROJECT_ROOT}/bin/_shared.sh
 
 ansible-vault decrypt --output=$(secrets_file) $(secrets_file).vaulted
 
+mkdir -p ansible/inventory
+
 tfenv install
 terraform init \
   -backend-config="bucket=$(remote_state_bucket)"

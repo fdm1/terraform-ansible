@@ -7,6 +7,7 @@ dist
 *.log
 
 states/*.plan
+ansible/inventory
 
 # Stored in S3
 *.tfstate

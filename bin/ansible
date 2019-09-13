@@ -20,8 +20,9 @@ EOF
 }
 
 SET_HOSTS=1
-INVENTORY="-i ansible/inventory.yml"
+INVENTORY="-i ansible/inventory"
 COMMAND="ansible all"
+export ANSIBLE_HOST_KEY_CHECKING=False
 
 if [ "$1" == '--no-set-hosts' ]; then
   SET_HOSTS=0
@@ -38,7 +39,7 @@ set -u
 if [ $SET_HOSTS -eq 1 ]; then
   refresh_terraform
   echo "setting hosts from terraform output"
-  set_remote_hosts
+  bin/ansible_host_util.py refresh
 fi
 
 $COMMAND $INVENTORY  "$@"

@@ -30,10 +30,10 @@ set -u
 
 refresh_terraform
 
-set_remote_hosts
+bin/ansible_host_util.py refresh
 set_instance_type $CLOUD
 
-HOST_VAR=${INSTANCE_TYPE}_HOST
-HOST_IP=$(eval echo \$${HOST_VAR})
+# TODO: this doesn't work with multiple hosts because the python script swallows asking for input
+HOST_IP=$(bin/ansible_host_util.py get_host_ip --host-type $INSTANCE_TYPE)
 
 ssh -A -o StrictHostKeyChecking=no $USERNAME@$HOST_IP

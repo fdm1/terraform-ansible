@@ -17,10 +17,10 @@ secrets_file() {
 set_instance_type() {
   case $1 in
     "do"|digitalocean)
-      export INSTANCE_TYPE=DROPLET
+      export INSTANCE_TYPE=digitalocean
       ;;
     lightsail|aws)
-    export INSTANCE_TYPE=LIGHTSAIL
+    export INSTANCE_TYPE=lightsail
       ;;
     *)
     echo "Unknown cloud provider: $1. Must be 'do' or 'aws'"
