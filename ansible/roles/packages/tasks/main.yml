@@ -1,11 +1,36 @@
 # vim:ft=ansible:
 ---
+
+- name: apt | update cache
+  become: true
+  apt:
+    force_apt_get: yes
+    update_cache: yes
+
+# TODO: tldr still not working on lightsail
+- name: packages | Install lightsail-specific dependencies
+  become: true
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - nodejs-legacy
+  when: "'lightsail' in group_names"
+
 - name: packages | Install packages
   become: true
   package:
     name: '{{ item }}'
     state: present
   with_items:
+    - npm
+
+- name: packages | Install npm packages
+  become: true
+  npm:
+    name: '{{ item }}'
+    global: true
+  with_items:
     - tldr
-    - bat
-    - fd
+    - emojme
+

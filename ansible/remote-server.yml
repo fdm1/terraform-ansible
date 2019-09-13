@@ -6,4 +6,4 @@
     - digitalocean
   roles:
     - role: users
-    # - role: packages
+    - role: packages

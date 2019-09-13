@@ -12,6 +12,11 @@ NC='\033[0m' # No Color
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 
+LIMIT=all
+if [[ $# > 0 ]]; then
+  LIMIT=$1
+fi
+
 printf ${RED}
-${PROJECT_ROOT}/bin/ansible --no-set-hosts playbook ansible/remote-server.yml --limit $1
+${PROJECT_ROOT}/bin/ansible --no-set-hosts playbook ansible/remote-server.yml --limit $LIMIT
 printf ${NC}
