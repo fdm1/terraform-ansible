@@ -1,5 +1,5 @@
 resource "aws_lightsail_instance" "lightsail" {
-  count = "${var.lightsail_count}"
+  count = var.lightsail_count
 
   name              = "lightsail"
   availability_zone = "us-east-1a"
@@ -12,7 +12,7 @@ resource "aws_lightsail_instance" "lightsail" {
   # 1 = usba
   # 2 = usbc
 
-  key_pair_name = "${aws_lightsail_key_pair.ssh_keys.2.name}"                                    # 1 key pair is required
+  key_pair_name = aws_lightsail_key_pair.ssh_keys.2.name                                    # 1 key pair is required
   user_data     = "cat ${join("\n", values(var.ssh_keys))} >> /home/ubuntu/.ssh/authorized_keys" # allow all keys to log in for ansibleing
   # TODO: breaking on creat user task.
   # "msg": "useradd: Permission denied.\nuseradd: cannot lock /etc/passwd; try again later.\n"

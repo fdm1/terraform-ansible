@@ -4,8 +4,12 @@ variable "digitalocean_token" {
 
 variable "ssh_keys" {
   description = "Map of SSH pubkeys. Stored in secrets in S3"
-  type        = "map"
+  type        = map(string)
 }
 
-variable "lightsail_count" {}
-variable "droplet_count" {}
+variable "lightsail_count" {
+}
+
+variable "droplet_count" {
+}
+

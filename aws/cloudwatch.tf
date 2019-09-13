@@ -10,17 +10,17 @@ resource "aws_cloudwatch_metric_alarm" "billing_alert" {
   treat_missing_data  = "missing"
 
   actions_enabled   = "true"
-  alarm_actions     = ["${aws_sns_topic.notify_me_via_email.arn}"]
+  alarm_actions     = list(aws_sns_topic.notify_me_via_email.arn)
   alarm_description = "Let me know when I'm billed anything"
 
-  dimensions {
+  dimensions = {
     Currency = "USD"
   }
 }
 
 resource "aws_budgets_budget" "total_cost" {
   budget_type       = "COST"
-  limit_amount      = "6"
+  limit_amount      = "6.0"
   limit_unit        = "USD"
   time_period_end   = "2087-06-15_00:00"
   time_period_start = "2017-07-01_00:00"
